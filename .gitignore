@@ -1,0 +1,17 @@
+# Private config — must be created manually on each server
+config.php
+
+# Personal documents — kept local only
+*.pdf
+
+# Claude Code
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
