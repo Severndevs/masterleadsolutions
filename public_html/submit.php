@@ -27,11 +27,16 @@ function clean(string $val): string {
     return htmlspecialchars(trim(strip_tags($val)), ENT_QUOTES, 'UTF-8');
 }
 
-$name     = clean($_POST['name']     ?? '');
-$phone    = clean($_POST['phone']    ?? '');
+// Strip newlines from anything that goes into email headers to prevent injection
+function clean_header(string $val): string {
+    return preg_replace('/[\r\n\t]/', ' ', clean($val));
+}
+
+$name     = clean_header($_POST['name']  ?? '');
+$phone    = clean_header($_POST['phone'] ?? '');
 $email    = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL);
 $property = clean($_POST['property'] ?? '');
-$service  = clean($_POST['service']  ?? '');
+$service  = clean_header($_POST['service']  ?? '');
 $message  = clean($_POST['message']  ?? '');
 
 // Required field validation
